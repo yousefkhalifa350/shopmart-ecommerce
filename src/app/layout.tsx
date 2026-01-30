@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/ui/navbar/page";
+import { Toaster } from "react-hot-toast";
+import CartContextProvider from "@/components/context/Cartcontext";
+import Footer from "@/components/ui/footer/page";
+import ScrollToTop from "@/components/ui/scroll/page";
+import { SessionProvider } from "next-auth/react";
+import MySessionProvider from "@/components/MySessionProvider/MySessionProvider";
+import MobileBottomNav from "./(pages)/mobileBottomNav/page";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+// import MobileNavbarUI from "./(pages)/navmobile/page";
+// import MobileBottomNav from "./(pages)/navmobilebutton/navmobilebutton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +36,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+      lang="en" suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+
+
+<MySessionProvider>
+<CartContextProvider>
+  
+<Navbar/>
+{/* <MobileNavbarUI /> */}
+
+   {children}
+   <ScrollToTop/>
+       <Toaster />
+     
+<Footer/>
+<MobileBottomNav />
+</CartContextProvider>
+
+</MySessionProvider>
+
+
       </body>
     </html>
   );
