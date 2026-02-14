@@ -11,12 +11,15 @@ import React from 'react'
  export  default async function Brands() {
 
 const response = await fetch ('https://ecommerce.routemisr.com/api/v1/brands',{next: { revalidate: 300 }})
-
-const {data:brand} :{data:Brand[]}  =  await response.json()
-
-
+//ver1
+// const {data:brand} :{data:Brand[]}  =  await response.json()
 
 
+
+//ver2
+const result = await response.json()
+
+const brand:Brand[]=Array.isArray(result.data) ? result.data:[];
 
 
   return (
@@ -24,7 +27,7 @@ const {data:brand} :{data:Brand[]}  =  await response.json()
    
     
 
- <div className=' container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 pt-5 mb-2'>
+ <div className=' container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 pt-5 mb-2 bg-neutral-100'>
   {brand.map((thebrand) => (
   <Link href={'/brands/'+thebrand._id} key={thebrand._id}>
   

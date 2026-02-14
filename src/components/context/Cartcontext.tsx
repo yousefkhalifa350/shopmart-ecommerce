@@ -60,10 +60,9 @@ async function Getcart () {
   
   setIsloading(true)
 
-  const response: CartResponse = await GetCartItem()
+const response: CartResponse | null = await GetCartItem()
 
-  setCartdata(response)
-
+  // setCartdata(response)
 
   const id = response?.data?.cartOwner
 
@@ -74,6 +73,8 @@ async function Getcart () {
     // 2️⃣ في Cookie (Server يشوفه)
     document.cookie = `cartOwnerID=${id}; path=/; max-age=86400`
   }
+
+setCartdata(response)
 
   setIsloading(false)
 }

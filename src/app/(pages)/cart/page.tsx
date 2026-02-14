@@ -68,7 +68,13 @@ if (typeof cartdata?.data?.products[0]?.product=='string'|| cartdata==null)  {
 
 
 
+useEffect(()=>{
 
+
+Getcart()
+
+  
+},[])
 
 
 
@@ -87,7 +93,7 @@ const data:CartResponse = await  updateingItemCart(productID , count)
 
 if(data.status=='success'){
   setCartdata(data)
-  toast.success('product Updateing succesuflly')
+  toast.success('Product Updateing Succesuflly')
   
 }
 
@@ -108,7 +114,7 @@ const data:CartResponse = await RemoveCartItem(productID)
 
 if(data.status=='success'){
   setCartdata(data)
-    toast.success('Product Deleted Successfulyy')
+  toast.success('Product Deleted Successfulyy')
 
 }
 
@@ -128,10 +134,9 @@ setIsclearing(true)
 const data:CartResponse = await ClearItemS()
 
 setIsclearing(false)
-if(data.message=='success'){
-  setCartdata(null)
-  toast.success('Cart cleared successfully')
-
+if (data.status === 'success') {
+  setCartdata(data)
+  toast.success('Cart Cleared Successfully')
 }
 
 
@@ -265,7 +270,7 @@ cartdata?.numOfCartItems! > 0 ?
     w-full
     transition
     hover:text-red-800
-    hover:underline cursor-pointer flex items-center justify-center w-full">
+    hover:underline cursor-pointer flex items-center justify-center">
 { removingId==item.product._id ? <span className='vip-spinner'></span>: <span>Remove</span>}
       
       </button>

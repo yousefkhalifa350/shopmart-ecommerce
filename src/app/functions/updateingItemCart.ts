@@ -8,7 +8,7 @@ export async function updateingItemCart (productID:string ,count:number ){
 
 
 const token = await GetUserToken()
-const response = await fetch ('https://ecommerce.routemisr.com/api/v1/cart/'+ productID,
+const response = await fetch ( `https://ecommerce.routemisr.com/api/v2/cart/${productID}`,
 
   {
 
@@ -21,12 +21,23 @@ headers:  {
 token:token!,
 'content-type':'application/json'}
 
-  },
+  }
 
 
 )
 
 
-return response.json()
+
+  if (!response.ok) {
+    return { status: 'fail' }
+  }
+
+
+  if (response.status === 204) {
+    return { status: 'success' }
+  }
+
+  // لو رجع JSON
+  return response.json()
 
 }

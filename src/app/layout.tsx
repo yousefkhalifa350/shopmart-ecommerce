@@ -10,8 +10,9 @@ import { SessionProvider } from "next-auth/react";
 import MySessionProvider from "@/components/MySessionProvider/MySessionProvider";
 import MobileBottomNav from "./(pages)/mobileBottomNav/page";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-// import MobileNavbarUI from "./(pages)/navmobile/page";
-// import MobileBottomNav from "./(pages)/navmobilebutton/navmobilebutton";
+import Mobilenavtop from "./(pages)/Mobilenavtop/page";
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,10 +44,8 @@ export default function RootLayout({
 
 <MySessionProvider>
 <CartContextProvider>
-  
-<Navbar/>
-{/* <MobileNavbarUI /> */}
 
+<Navbar/>
    {children}
    <ScrollToTop/>
        <Toaster />

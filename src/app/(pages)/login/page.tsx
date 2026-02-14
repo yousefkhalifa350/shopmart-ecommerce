@@ -17,10 +17,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Card } from '@/components/ui/card'
-import { useSearchParams } from 'next/navigation'
-import { Loader, Loader2 } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Loader, Loader2, Router } from 'lucide-react'
 import { HeroGeometric } from '@/components/ui/shadcn-io/shape-landing-hero'
 import Loading from '@/app/loading'
+import toast from 'react-hot-toast';
+
 
 //shakl l data 3ndkk
 const formSchema = z.object({
@@ -44,6 +46,7 @@ type FormFields = z.infer<typeof formSchema>
 
 export default function Login() {
 
+  const router = useRouter();
 
 const [isloading, setIsloading] = useState(false)
 const SearchParams = useSearchParams()
@@ -79,6 +82,7 @@ redirect:true
 
     console.log(response)
     setIsloading(false)
+    toast.success('Logged in successfully')
   }
 
 
@@ -242,6 +246,21 @@ transition={{ duration: 0.7,delay: 0.3,ease: "easeOut"}}
         >
           {isloading ? <span className="vip-spinner" /> : "Login"}
         </button>
+
+
+<p className="mt-6 text-center text-sm text-gray-500">
+  Don't have an account?{" "}
+  <span
+    className="text-orange-500 font-semibold cursor-pointer
+               hover:text-orange-600 transition-colors hover:underline"
+    onClick={() => router.push("/register")}
+  >
+    Sign up
+  </span>
+</p>
+
+
+
       </form>
     </Form>
   </div>

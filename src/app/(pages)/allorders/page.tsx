@@ -1,6 +1,10 @@
+'use server'
 import { cookies } from 'next/headers'
 import { userorders } from '@/interfaces'
 import {  DropdownMenuDemo } from '@/components/Combobox/combobox'
+import { PackageX } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default async function Allorders() {
   // 1️⃣ نجيب الـ id من cookie
@@ -9,24 +13,64 @@ const cookieStore = await cookies()
 const cartOwnerID = cookieStore.get('cartOwnerID')?.value
 
   if (!cartOwnerID) {
-    return <p>No orders</p>
+    return    <section className="min-h-[60vh] flex items-center justify-center bg-gray-50 px-4">
+      <div className="text-center max-w-md">
+        
+        {/* Icon */}
+        <div className="flex justify-center mb-6">
+          <div className="bg-gray-100 p-6 rounded-full">
+            <PackageX className="w-12 h-12 text-gray-400" />
+          </div>
+        </div>
+
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          No Orders Yet
+        </h2>
+
+        {/* Description */}
+        <p className="text-gray-500 mb-6">
+          Looks like you haven’t placed any orders yet.
+          Start shopping and after checkout your orders will appear here.
+        </p>
+
+        {/* CTA Button */}
+        <Link
+    href="/products"
+    className="
+      px-6 py-3
+      rounded-full
+      bg-black
+      text-white
+      font-medium
+      hover:bg-[#2453d5e9]
+      transition ease-in
+    "
+  >
+  Start shopping
+  </Link>
+
+      </div>
+    </section>
   }
 
   // 2️⃣ نضرب الـ API
   const response = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/user/${cartOwnerID}`,
-    { cache: 'no-store' }
+  
   
   )
 
 
 
 
-
+// const result = await response.json()
+// const orders: userorders[] = result.data || []
   
+
   // 3️⃣ الريسبونس Array
   const orders: userorders[] = await response.json()
-  console.log(orders);
+
   
   // 4️⃣ نعمل map عادي
   return (

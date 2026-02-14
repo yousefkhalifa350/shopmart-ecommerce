@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from '../ui/button'
 import {
   Sheet,
@@ -23,8 +23,14 @@ export default function Checkout({cartID}:{cartID:string}) {
     let phoneInput=useRef<HTMLInputElement | null>(null)
 
 
+    const [isloading, setIsloading] = useState(false)
+
+
+
     async function checkoutSession(){
     
+      setIsloading(true)
+
 const token = await GetUserToken()
 
 
@@ -54,7 +60,12 @@ const token = await GetUserToken()
      console.log(data);
      
      if (data.status=='success'){
-    
+
+      setIsloading(false)
+
+      localStorage.removeItem('wishlist')
+
+
         window.location.href=data.session.url
 
      }
@@ -69,7 +80,8 @@ const token = await GetUserToken()
 
 async function cashorder (cartID:any) { 
 
-console.log(cartID,'check');
+
+
 
  const shippingAddress = {
     
@@ -93,11 +105,11 @@ headers:{token:token! , 'content-type':'application/json'}
 
 const data = await response.json()
 
-console.log(data);
+
 
 if(data.status=='success'){
 
-
+      localStorage.removeItem('wishlist')
   toast.promise(
   cashorder(cartID),
    {
@@ -130,7 +142,7 @@ if(data.status=='success'){
 
   <Sheet>
     <SheetTrigger asChild>
-      <Button variant="outline" className="w-full">Proceed to Checkout</Button>
+      <Button variant="outline" className="w-full cursor-pointer">Proceed to Checkout</Button>
     </SheetTrigger>
 
 
@@ -162,10 +174,10 @@ Add a shipping address for your deliveries.
       </div>
 
       <SheetFooter>
-        <Button onClick={()=>checkoutSession()} type="submit" >Visa</Button>
+        <Button onClick={()=>checkoutSession()} type="submit" >{isloading ? <span className='vip-spinner'></span>:<span>Visa</span>}</Button>
         <Button onClick={()=>cashorder(cartID)} type="submit" >Cash</Button>
         <SheetClose asChild>
-          <Button variant="outline">Close</Button>
+          <Button variant="outline" className='cursor-pointer'>Close</Button>
         </SheetClose>
       </SheetFooter>
     </SheetContent>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -14,11 +14,14 @@ import {
 import { Button } from "../ui/button";
 import { GetUserToken } from "@/app/Helpers/GetUserToken";
 import { AddressInterface } from "@/interfaces";
+import toast from "react-hot-toast";
 type AddressProps = {
   setallAddresses: React.Dispatch<React.SetStateAction<AddressInterface[]>>;
 };
 
 export default function Address({ setallAddresses }: AddressProps) {
+
+const [isloading, setIsloading] = useState(false)
 
   
 let addressnameinput=useRef<HTMLInputElement | null>(null)
@@ -28,7 +31,7 @@ let citysinput=useRef<HTMLInputElement| null>(null)
 
 async function addNewAddress (){ 
 
-
+setIsloading(true)
 
 
 const updateaddress = {
@@ -53,6 +56,8 @@ const token = await GetUserToken()
 
   const data = await response.json();
 
+  setIsloading(false)
+  toast.success('Address added')
   console.log("POST response data of Your New Address:", data);
   
   
@@ -126,10 +131,10 @@ const token = await GetUserToken()
            </div>
      
            <SheetFooter>
-             <Button onClick={()=>addNewAddress()}  type="submit" >Add</Button>
+             <Button onClick={()=>addNewAddress()}  type="submit" >{isloading ? <span className="vip-spinner"></span>: <>Add</>}</Button>
           
              <SheetClose asChild>
-               <Button variant="outline">Close</Button>
+               <Button className="cursor-pointer" variant="outline">Close</Button>
              </SheetClose>
            </SheetFooter>
          </SheetContent>

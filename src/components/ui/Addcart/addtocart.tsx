@@ -28,11 +28,29 @@ import { addWishlistItem, removeWishlistItem } from '@/app/functions/Wishlist'
 export default function Addtocart({productId}:{productId:string}) {
 const ID = productId
 const router = useRouter()
+const session = useSession()
 
-useEffect(() => {
-  const saved = localStorage.getItem(`wishlist-${ID}`);
-  setIsWishlisted(!!saved);
-}, [ID]);
+// useEffect(() => {
+//   const saved = localStorage.getItem(`wishlist-${ID}`);
+//   setIsWishlisted(!!saved);
+// }, [ID]);
+
+
+
+
+// useEffect(() => {
+//   const user = session.data?.user as any
+//   const userId = user?.id || user?._id || user?.sub
+
+//   if (!userId) {
+//     setIsWishlisted(false)
+//     return
+//   }
+
+//   const stored = localStorage.getItem(`wishlist_${userId}`)
+//   const wishlist: string[] = stored ? JSON.parse(stored) : []
+//   setIsWishlisted(wishlist.includes(ID))
+// }, [ID, session.data])
 
 
 let {Getcart , setCartdata, isloading , setIsloading} = useContext(cartcontext)
@@ -40,31 +58,35 @@ let {Getcart , setCartdata, isloading , setIsloading} = useContext(cartcontext)
 const [loading, setLoading] = useState(false)
 const [isWishlisted, setIsWishlisted] = useState(false)
 const [red, setRed] = useState(false)
-const session = useSession()
+
+
+
+
 
 async function addproducttocart () { 
-  
- setLoading(true)
+  setLoading(true)
 
-if(session.status=='authenticated'){
- 
+  if(session.status === 'authenticated'){
+    try {
+      const data: CartResponse = await AddProducttoCart(productId)
 
-const data:CartResponse = await AddProducttoCart(productId)
-
-data.status=='success' && toast.success('Product added successfully to your cart')
-
-setCartdata(data)
-
-setLoading(false)
-}else{
-  
-router.push('/login')
-toast.error('Please Login First')
-
+      if (data.status === 'success') {
+        toast.success('Product added successfully to your cart')
+        setCartdata(data)
+      }
+    } catch (error) {
+      toast.error('Failed to Add product , please try again')
+    } finally {
+      setLoading(false)
+    }
+  } else {
+    setLoading(false)
+    toast.error('Please Login First')
+    router.push('/login')
+  }
 }
 
 
-}
 
 
 
@@ -101,6 +123,69 @@ async function toggleWishlist() {
     toast.error('Please Login First')
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 2 - async function toggleWishlist() {
+//   const user = session.data?.user as any
+//   const userId = user?.id || user?._id || user?.sub
+
+// if (session.status === 'loading') return
+
+// if (!session.data?.user || !userId) {
+//   toast.error('Please Login First')
+//   router.push('/login')
+//   return
+// }
+
+//   const key = `wishlist_${userId}`
+//   const stored = localStorage.getItem(key)
+//   const wishlist: string[] = stored ? JSON.parse(stored) : []
+
+//   try {
+//     if (!isWishlisted) {
+//       const data: CartResponse = await addWishlistItem(ID)
+//       if (data.status === 'success') {
+//         localStorage.setItem(key, JSON.stringify([...wishlist, ID]))
+//         setIsWishlisted(true)
+//         toast.success('Added to wishlist')
+//       }
+//       return
+//     }
+
+//     const data: CartResponse = await removeWishlistItem(ID)
+//     if (data.status === 'success') {
+//       localStorage.setItem(
+//         key,
+//         JSON.stringify(wishlist.filter(id => id !== ID))
+//       )
+//       setIsWishlisted(false)
+//       toast.success('Removed from wishlist')
+//     }
+//   } catch {
+//     toast.error('Something went wrong')
+//   }
+// }
+
+
+
+
+
+
+
 
 
 

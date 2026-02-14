@@ -12,13 +12,10 @@ import Link from 'next/link'
 
 
 
-{/* <Link  href={'/login'}>  
-<DropdownMenuItem className='cursor-pointer'>Login
-  </DropdownMenuItem>
-  </Link> */}
+
 export default function MobileBottomNav() {
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 bg-white border-t border-gray-200 sm:hidden">
+    <nav className="sticky bottom-0 left-0 w-full z-50 bg-white border-t border-gray-200 sm:hidden">
       <div className="flex items-center justify-around py-2">
 
         {/* Home */}

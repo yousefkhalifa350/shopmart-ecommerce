@@ -1,4 +1,4 @@
-
+'use server'
 import { Product } from '@/interfaces';
 import { Params } from 'next/dist/server/request/params';
 
@@ -29,7 +29,7 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import ProductSlider from '@/components/ui/productslider/ProductSlider';
 import Addtocart from '@/components/ui/Addcart/addtocart';
-import Loading from '@/app/loading';
+
 
 
 
@@ -47,14 +47,30 @@ let {productId} = await params;
 console.log(await params);
 
 
+//ver2
+const response = await fetch(
+  'https://ecommerce.routemisr.com/api/v1/products/' + productId,{ cache: 'no-store' }
+)
+
+const result = await response.json()
+
+const product: Product | null = result?.data ? result.data : null
+
+if (!product) return null
 
 
-const response = await fetch('https://ecommerce.routemisr.com/api/v1/products/'+ productId)
 
 
-const {data:product}:{data:Product} = await response.json()
 
-console.log(product);
+
+
+//ver1
+// const response = await fetch('https://ecommerce.routemisr.com/api/v1/products/'+ productId)
+
+
+// const {data:product}:{data:Product} = await response.json()
+
+// console.log(product);
 
 
 
@@ -64,7 +80,7 @@ console.log(product);
   return (
     <>
     
-    <Card className=' grid md:grid-cols-2 items-center w-3/4 mx-auto '>
+    <Card className=' grid md:grid-cols-2 items-center w-3/4 mx-auto mt-5 mb-2'>
 
 <div>
 

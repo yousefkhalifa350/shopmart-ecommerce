@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { userorders } from "@/interfaces"
+import Image from "next/image"
 
 type Props = {
   orderitems:any[]
@@ -73,7 +74,7 @@ export function DropdownMenuDemo({orderitems}:Props) {
         >
           {/* ===== Image ===== */}
           <div className="relative h-20 w-20 flex-shrink- overflow-hidden rounded-xl">
-            <img
+            {/* <img
               src={items.product.imageCover}
               alt={items.product.title}
               className="
@@ -81,7 +82,15 @@ export function DropdownMenuDemo({orderitems}:Props) {
                 transition-transform duration-300
                 hover:scale-110
               "
-            />
+            /> */}
+
+            <Image
+  src={items.product.imageCover}
+  alt={items.product.title}
+  width={80}
+  height={80}
+  className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
+/>
           </div>
 
           {/* ===== Content ===== */}

@@ -312,9 +312,6 @@ background: #2453d5e9;
 }
 
 
-
-
-
 .discount-badge {
   background-color: #dc2626;
   color: white;
@@ -322,4 +319,14 @@ background: #2453d5e9;
   font-weight: 700;
   padding: 6px 12px;
   border-radius: 8px;
+}
+
+
+
+
+
+/* Strokee */
+
+.stroke-white {
+ -webkit-text-stroke: 2px #2B7FFF;
 }

@@ -24,21 +24,27 @@ import Loading from '@/app/loading';
 
 export default async function Products() {
 
-const response = await fetch('https://ecommerce.routemisr.com/api/v1/products', )
-
-const {data:product}:{data:Product[]} = await response.json()
+const response = await fetch('https://ecommerce.routemisr.com/api/v1/products',  { next: { revalidate: 300 } })
 
 
+//ver1
+// const {data:product}:{data:Product[]} = await response.json()
 
-console.log(product)
+
+
+//ver2
+const result = await response.json();
+
+const product: Product[] = Array.isArray(result.data) ? result.data : [];
+                                  
 
 
   return  (
    <>
    
    
-  <div className=" container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 pt-5">
-      {  product.map((product)=><div key={product.id}>
+  <div className=" container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 pt-5 ">
+      {product.map((product)=><div key={product.id}>
 
 
 

@@ -12,15 +12,15 @@ import Addtocart from "@/components/ui/Addcart/addtocart";
 import Loading from "@/app/loading";
 import { GetUserToken } from "@/app/Helpers/GetUserToken";
 import { HeartIcon } from "lucide-react";
-// import Searchform from "@/components/ui/SearchForm/searchform";
+
 
 export default async function WishlistDetails() {
 
 
 const token = await GetUserToken()
 
-const response = await fetch('https://ecommerce.routemisr.com/api/v1/wishlist',   {
-
+const response = await fetch('https://ecommerce.routemisr.com/api/v1/wishlist' ,   {
+ cache: 'no-store',
 headers:{
   token:token!,
 
@@ -30,9 +30,27 @@ headers:{
   })
 
 
-const result = (await response.json()) as ResponseWishlist;
-const res: Product[] = result.data;
-console.log(res,'my data wishlist');
+//Ver1
+// const result = (await response.json()) as ResponseWishlist;
+// const res: Product[] = result.data;
+//console.log(res,'my data wishlist');
+
+
+
+
+//Ver2
+if (!response.ok) {
+  console.log('wishlist api error')
+  return
+}
+
+const result = await response.json()
+
+const res: Product[] = Array.isArray(result?.data) ? result.data : []
+
+// console.log(res, 'my data wishlist')
+
+
 
 
 
@@ -42,7 +60,7 @@ console.log(res,'my data wishlist');
       {/* ===== Title =====    */}
    
 <h2 className="text-3xl font-semibold tracking-tight mb-8">
-        Wishlist
+        My Wishlist
       </h2>
       {/* ===== Wishlist Name =====   */}
 
@@ -52,7 +70,7 @@ console.log(res,'my data wishlist');
 
       {/* ===== Grid ===== */}
 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 pt-5">
-      { res.map((wishitem)=><div key={wishitem.id}>
+      {res.map((wishitem)=><div key={wishitem.id}>
 
       
 

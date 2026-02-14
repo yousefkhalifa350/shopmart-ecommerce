@@ -20,12 +20,12 @@ export default function Categoriesslider() {
     async function getCategories() {
       try {
         const res = await fetch(
-          "https://ecommerce.routemisr.com/api/v1/categories"
-        );
+          "https://ecommerce.routemisr.com/api/v1/categories",{next: { revalidate: 300 }} );
         const data = await res.json();
         setCategories(data.data);
       } catch (error) {
         console.error("Error fetching categories", error);
+        setCategories([]); 
       }
     }
 
@@ -50,7 +50,7 @@ export default function Categoriesslider() {
   className="w-full max-w-7xl mx-auto overflow-hidden touch-pan-x"
 >
   <CarouselContent className="p-4">
-    {categories.map((cat) => (
+    {categories?.map((cat) => (
       <CarouselItem
         key={cat._id}
          className="
@@ -72,6 +72,7 @@ export default function Categoriesslider() {
               <Image
                 src={cat.image}
                 alt={cat.name}
+                  sizes="200px"
                 fill
                 className="object-cover"
               />

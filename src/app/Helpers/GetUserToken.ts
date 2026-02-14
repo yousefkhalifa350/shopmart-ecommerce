@@ -9,6 +9,6 @@ const AccessToken = await decode({token:y,secret:process.env.NEXTAUTH_SECRET!})
 
 
 
-return AccessToken?.token
+return AccessToken?.token as string  
 
 }

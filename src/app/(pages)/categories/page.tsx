@@ -16,10 +16,15 @@ export default async function Cartegories() {
 
 const response = await fetch('https://ecommerce.routemisr.com/api/v1/categories',{next: { revalidate: 300 }})
 
+  //ver1
+  // const { data : categories }: { data: Category[] } = await response.json();
 
-  const { data : categories }: { data: Category[] } = await response.json();
+
+  //ver2
+  const result = await response.json()
 
 
+const categories:Category[] = Array.isArray(result.data) ? result.data : [];
 
 
   return (

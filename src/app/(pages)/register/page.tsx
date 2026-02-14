@@ -12,7 +12,7 @@
   //shakl l data 3ndkk
   const formSchema = z.object({
 
-  name:z.string('Invalid Fullname!').nonempty('Fullname is required').min(8,'Min Two Name'),
+  name:z.string().nonempty('Fullname is required').min(8,'Full name must contain at least two words'),
   email:z.string().nonempty('Email is required').regex(/.+@.+\..+/, 'Please enter invalid email'),
   password:z.string('Password is not valid!').nonempty('Password is required').regex(/^(?=.*[A-Z])(?=.*\d).{6,}$/,'Matches 8 or more characters that are alphanumeric or from the specified special character at least one special character.'),
   rePassword : z.string().nonempty('rePassword is required'),

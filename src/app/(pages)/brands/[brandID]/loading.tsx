@@ -4,7 +4,7 @@ export default function loading() {
   return (
     <div className='min-h-screen flex justify-center items-center'> 
     
-    <span className='page-spinner'></span>
+    <span className='vip-spinner-page'></span>
     
     </div>
   )

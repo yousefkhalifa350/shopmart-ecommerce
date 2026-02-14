@@ -25,6 +25,7 @@ import Link from 'next/link'
 import { HeartIcon, Loader, Loader2, ShoppingCart, ShoppingCartIcon, UserIcon } from 'lucide-react'
 import { cartcontext } from '@/components/context/Cartcontext'
   import { signOut, useSession } from 'next-auth/react'
+import Mobilenavtop from '@/app/(pages)/Mobilenavtop/page'
 
 
 
@@ -100,7 +101,8 @@ const {isloading , setIsloading , cartdata , setCartdata} = useContext(cartconte
 
 <div className="flex">
 
-
+   <Mobilenavtop/>
+   
 {session.status=='authenticated'&&<Link href={'/wishlistdetails '}>
 <HeartIcon/>
 </Link>}
@@ -108,12 +110,17 @@ const {isloading , setIsloading , cartdata , setCartdata} = useContext(cartconte
 
     <DropdownMenu>
   <DropdownMenuTrigger>
-    <UserIcon/>
+    <UserIcon className='cursor-pointer'/>
     </DropdownMenuTrigger>
+
+
+ 
+
   <DropdownMenuContent>
     <DropdownMenuLabel >My Account</DropdownMenuLabel>
+   
     <DropdownMenuSeparator />
-
+ 
 {session.status=='authenticated'?<>
 
 <Link href={'/profile'}>  
@@ -124,9 +131,15 @@ const {isloading , setIsloading , cartdata , setCartdata} = useContext(cartconte
   
 
 
-<DropdownMenuItem className='cursor-pointer' onClick={()=> signOut({
-  callbackUrl:'/'
-})}>Logout
+<DropdownMenuItem
+  className="cursor-pointer"
+  onClick={() => {
+    document.cookie = "cartOwnerID=; path=/; max-age=0";
+    localStorage.clear();
+    signOut({ callbackUrl: "/" });
+  }}
+>
+  Logout
 </DropdownMenuItem>
 
 
