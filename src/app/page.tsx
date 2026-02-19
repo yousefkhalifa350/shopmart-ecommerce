@@ -133,7 +133,7 @@ export default async function Home() {
         <div className="text-3xl font-bold mb-12"> <Herorotatingtext/></div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {products?.slice(25,40).map((product: any) => (
+          {products?.slice(25,40).map((product: Product) => (
             <Link
               key={product.id}
               href={`/products/${product.id}`}
@@ -182,7 +182,7 @@ export default async function Home() {
     
 
     <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-      {brands?.slice(10,25).map((brand: any) => (
+      {brands?.slice(10,25).map((brand: Brand) => (
         <Link
           key={brand._id}
           href={`/brands/${brand._id}`}

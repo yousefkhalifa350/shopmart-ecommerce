@@ -149,9 +149,14 @@ export default function Footer() {
         {/* COPYRIGHT */}
         <div className="text-sm opacity-90">
   © 2026 / 
-  <span className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-white after:transition-all hover:after:w-full">
-    ShopMart Built by Yousef Hesham.
-  </span>
+<a
+  href="https://www.linkedin.com/in/yousef-hesham-8197a5284/"
+  className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-white after:transition-all hover:after:w-full"
+>
+  ShopMart Built by Yousef Hesham.
+</a>
+
+
 </div>
 
         {/* PAYMENTS */}

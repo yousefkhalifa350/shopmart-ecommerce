@@ -75,7 +75,7 @@ return addresses;
 
 
 
-async function removerloggeduseraddress(id:any){
+async function removerloggeduseraddress(id:string){
 
    setLoadingAddressId(id);
 
