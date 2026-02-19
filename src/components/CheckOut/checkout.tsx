@@ -42,7 +42,7 @@ const token = await GetUserToken()
     
       }
     
-     const response = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?https://shopmart-ecommerce.vercel.app`,{
+     const response = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=https://shopmart-ecommerce.vercel.app`,{
      
     method:'POST',
     body:JSON.stringify({shippingAddress}) , 
